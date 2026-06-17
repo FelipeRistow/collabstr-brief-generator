@@ -4,11 +4,10 @@ A small Django + jQuery app that turns a few inputs — **brand name, platform, 
 
 Built as a tight vertical slice: clean Django organization, schema-constrained LLM output, input guardrails, and a Collabstr-style UI.
 
-## Live Demo
-_TODO: add the public URL_
+## Demo
 
-## Loom Demo
-_TODO: add the Loom link (<1 min)_
+- Live demo: https://aibrief.masterprod.com.br
+- Loom walkthrough: https://www.loom.com/share/0704c0ed64264f1d873bff583928045f
 
 ## Tech Stack
 - **Backend:** Django 6, Python 3.12+
