@@ -1,0 +1,4 @@
+Django==6.0.6
+openai==2.43.0
+pydantic==2.13.4
+python-dotenv==1.2.2

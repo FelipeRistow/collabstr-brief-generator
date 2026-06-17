@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Campaign Brief Generator | Collabstr</title>
+    <link rel="icon" type="image/svg+xml"
+          href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF84A0'/%3E%3Cstop offset='0.5' stop-color='%23FB669D'/%3E%3Cstop offset='1' stop-color='%23885FB7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Ctext x='50' y='71' font-family='Inter,Arial' font-size='62' font-weight='700' fill='white' text-anchor='middle'%3Ec%3C/text%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'generator/styles.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <span class="logo">collabstr<span class="logo-dot">.</span></span>
+        <span class="topbar-tag">AI Tools</span>
+    </header>
+
+    <main class="page">
+        <section class="hero">
+            <h1 class="hero-title">AI Campaign Brief Generator</h1>
+            <p class="hero-subtitle">Create a creator-ready campaign brief in seconds.</p>
+        </section>
+
+        <div class="grid">
+            <!-- Left: input form -->
+            <section class="card form-card">
+                <h2 class="card-title">Campaign details</h2>
+                <form id="brief-form" novalidate>
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label for="brand_name">Brand name</label>
+                        <input type="text" id="brand_name" name="brand_name"
+                               maxlength="60" autocomplete="off"
+                               placeholder="e.g. Glossier">
+                    </div>
+
+                    <div class="field">
+                        <label for="platform">Target platform</label>
+                        <select id="platform" name="platform">
+                            <option value="" selected disabled>Select a platform</option>
+                            {% for p in platforms %}<option value="{{ p }}">{{ p }}</option>{% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="goal">Goal</label>
+                        <select id="goal" name="goal">
+                            <option value="" selected disabled>Select a goal</option>
+                            {% for g in goals %}<option value="{{ g }}">{{ g }}</option>{% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="tone">Tone</label>
+                        <select id="tone" name="tone">
+                            <option value="" selected disabled>Select a tone</option>
+                            {% for t in tones %}<option value="{{ t }}">{{ t }}</option>{% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="description">Campaign description <span class="optional">(optional)</span></label>
+                        <textarea id="description" name="description" rows="3" maxlength="300"
+                                  placeholder="Any extra context — product, audience, key message…"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary" id="submit-btn">Generate Brief</button>
+                </form>
+            </section>
+
+            <!-- Right: result -->
+            <section class="card result-card">
+                <div id="error" class="alert" hidden></div>
+
+                <div id="placeholder" class="placeholder">
+                    <div class="placeholder-icon">✨</div>
+                    <p>Fill in the campaign details and your brief will appear here.</p>
+                </div>
+
+                <div id="loading" class="loading" hidden>
+                    <div class="spinner"></div>
+                    <p>Generating your campaign brief…</p>
+                </div>
+
+                <div id="result" hidden>
+                    <div class="result-section">
+                        <div class="result-head">
+                            <h3>Campaign Brief</h3>
+                            <button type="button" id="copy-btn" class="btn-ghost">Copy</button>
+                        </div>
+                        <p id="brief" class="brief-text"></p>
+                    </div>
+
+                    <div class="result-section">
+                        <h3>Content Angles</h3>
+                        <ol id="angles" class="angles"></ol>
+                    </div>
+
+                    <div class="result-section">
+                        <h3>Creator Selection Criteria</h3>
+                        <ul id="criteria" class="criteria"></ul>
+                    </div>
+
+                    <div id="metrics" class="metrics"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="{% static 'generator/app.js' %}"></script>
+</body>
+</html>
